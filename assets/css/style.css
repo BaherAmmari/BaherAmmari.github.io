@@ -34,6 +34,11 @@ body::before {
     background-attachment: fixed;
   }
 }
+@media (max-width: 750px) {
+  body::before {
+    padding-left: 650px;
+  }
+}
 
 a {
   color: #18d26e;
