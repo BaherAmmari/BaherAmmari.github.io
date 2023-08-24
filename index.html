@@ -633,9 +633,9 @@
           <textarea class="form-control" name="message" id="message" rows="5" placeholder="Message" required></textarea>
         </div>
         <div class="my-3">
-          <div class="loading">Loading</div>
-          <div class="error-message"></div>
-          <div class="sent-message">Your message has been sent. Thank you!</div>
+          <div class="loading" id="loading">Loading</div>
+          <div class="error-message" id="error-message"></div>
+          <div class="sent-message" id="success">Your message has been sent. Thank you!</div>
         </div>
         <div class="text-center"><button type="submit" id="btnContact">Send Message</button></div>
       </form>
@@ -662,6 +662,14 @@
     var email= document.getElementById('email').value;
     var subject= document.getElementById('subject').value;
     var message= document.getElementById('message').value;
+    var Error = document.getElementById('error-message');
+    var Success = document.getElementById('success');
+    if (name === '' || email === '' || subject === '' || message === '') {
+      Error.innerHTML = 'Please complete all required fields';
+      Error.style.background = '#ed3c0d';
+      Success.style.display='none'
+    }else{
+    document.getElementById('loading').style.display='block'
     var body='name :'+ name+'<br/> email :'+email +'<br /> message :' +message
     console.log(email);
     Email.send({
@@ -672,9 +680,30 @@
     From : 'baher.ammari@esprit.tn',
     Subject : subject,
     Body : body
-}).then(
-  message => alert(message)
+})
+
+.then(
+  message => {
+    if(message=="OK")
+    {
+      document.getElementById('error-message').innerHTML = '';
+      document.getElementById('error-message').style.background = 'none';
+      document.getElementById('success').style.display='block'
+      document.getElementById('name').value=""
+      document.getElementById('email').value=""
+      document.getElementById('subject').value=""
+      document.getElementById('message').value=""
+      document.getElementById('loading').style.display='none'
+
+    } 
+    else{
+      document.getElementById('loading').style.display='none'
+      document.getElementById('error-message').innerHTML = 'An error has occurred';
+      document.getElementById('error-message').style.background = '#ed3c0d';
+    }
+  }
 );
+    }
    })
 </script>
   <!-- Template Main JS File -->
